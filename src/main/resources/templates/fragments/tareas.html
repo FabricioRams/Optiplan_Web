@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="tareas" class="tareas-container">
+        <div class="tareas-header">
+            <button class="btn btn-add" onclick="abrirModalNuevaTarea()">+ Agregar Nueva Tarea</button>
+        </div>
+        
+        <div class="tareas-tabs">
+            <h3>Tareas Pendientes</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Descripción</th>
+                        <th>Prioridad</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tarea : ${tareasPendientes}">
+                        <td th:text="${tarea.titulo}"></td>
+                        <td th:text="${tarea.categoria.nombre}"></td>
+                        <td th:text="${tarea.descripcion}"></td>
+                        <td>
+                            <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}" 
+                                  th:text="${tarea.prioridad}"></span>
+                        </td>
+                        <td th:text="${#temporals.format(tarea.fecha, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></td>
+                        <td>
+                            <button class="btn btn-sm btn-success" 
+                                    th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                            <button class="btn btn-sm btn-danger" 
+                                    th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 30px;">Tareas Completadas</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Descripción</th>
+                        <th>Prioridad</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tarea : ${tareasCompletadas}">
+                        <td th:text="${tarea.titulo}"></td>
+                        <td th:text="${tarea.categoria.nombre}"></td>
+                        <td th:text="${tarea.descripcion}"></td>
+                        <td>
+                            <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}" 
+                                  th:text="${tarea.prioridad}"></span>
+                        </td>
+                        <td th:text="${#temporals.format(tarea.fecha, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="calendario" class="calendario-container">
+        <div class="calendario-header">
+            <h2>Calendario Mensual</h2>
+            <p th:if="${mesActual != null}" th:text="${#temporals.format(mesActual, 'MMMM yyyy')}"></p>
+        </div>
+
+        <div class="calendario-grid">
+            <!-- Encabezados de días de la semana -->
+            <div class="calendario-dia-header">Lunes</div>
+            <div class="calendario-dia-header">Martes</div>
+            <div class="calendario-dia-header">Miércoles</div>
+            <div class="calendario-dia-header">Jueves</div>
+            <div class="calendario-dia-header">Viernes</div>
+            <div class="calendario-dia-header">Sábado</div>
+            <div class="calendario-dia-header">Domingo</div>
+
+            <th:block th:if="${mesActual != null}">
+                <!-- Días del mes -->
+                <th:block th:with="primerDia=${mesActual.withDayOfMonth(1)},
+                                  diasEnMes=${mesActual.lengthOfMonth()},
+                                  diaSemanaPrimero=${primerDia.getDayOfWeek().getValue()}">
+
+                    <!-- Espacios vacíos antes del primer día (Lunes = 1, Domingo = 7) -->
+                    <th:block th:each="i : ${#numbers.sequence(1, diaSemanaPrimero - 1)}">
+                        <div class="calendario-celda vacio"></div>
+                    </th:block>
+
+                    <!-- Días del mes -->
+                    <th:block th:each="dia : ${#numbers.sequence(1, diasEnMes)}">
+                        <th:block th:with="fechaDia=${mesActual.withDayOfMonth(dia)},
+                                          hoy=${T(java.time.LocalDate).now()},
+                                          esHoy=${fechaDia.isEqual(hoy)}">
+                            <div th:class="${esHoy ? 'calendario-celda hoy' : 'calendario-celda'}">
+                                <div class="numero-dia" th:text="${dia}"></div>
+                                <div class="tareas-dia">
+                                    <th:block th:if="${tareas != null}">
+                                        <th:block th:each="tarea : ${tareas}">
+                                            <div th:if="${tarea.fecha != null and tarea.fecha.isEqual(fechaDia)}"
+                                                 th:class="${'tarea-item priority-' + #strings.toLowerCase(tarea.prioridad)}"
+                                                 th:title="${tarea.titulo + ' - ' + tarea.descripcion}">
+                                                <span th:if="${tarea.horaFin != null}" th:text="${#temporals.format(tarea.horaFin, 'HH:mm') + ' '}"></span>
+                                                <span th:text="${tarea.titulo}"></span>
+                                            </div>
+                                        </th:block>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </th:block>
+        </div>
+
+        <div class="calendario-leyenda">
+            <h4>Leyenda:</h4>
+            <div class="leyenda-items">
+                <div class="leyenda-item">
+                    <span class="badge priority-alta">Alta</span> Prioridad Alta
+                </div>
+                <div class="leyenda-item">
+                    <span class="badge priority-media">Media</span> Prioridad Media
+                </div>
+                <div class="leyenda-item">
+                    <span class="badge priority-baja">Baja</span> Prioridad Baja
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiPlan - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h2>Hola, <span th:text="${usuario.nombre}"></span></h2>
+            <a th:href="@{/logout}" class="btn btn-logout">Cerrar Sesión</a>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="calendario">CALENDARIO</button>
+            <button class="tab-btn" data-tab="semana">SEMANA</button>
+            <button class="tab-btn" data-tab="tareas">TAREAS</button>
+            <button class="tab-btn" data-tab="recordatorios">RECORDATORIOS</button>
+        </div>
+        
+        <div id="content-area" class="content-area">
+            <!-- El contenido se cargará dinámicamente aquí -->
+        </div>
+    </div>
+    
+    <!-- Modal para agregar tarea -->
+    <div id="modal-nueva-tarea" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>AGREGAR TAREA</h2>
+            <form id="form-nueva-tarea">
+                <div class="form-group">
+                    <label>Título:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Categoría:</label>
+                    <select id="categoriaId" name="categoriaId" required>
+                        <option value="">Seleccione...</option>
+                        <option th:each="cat : ${categorias}" 
+                                th:value="${cat.id}" 
+                                th:text="${cat.nombre}"></option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fecha Fin:</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Hora Fin (HH:mm):</label>
+                    <input type="time" id="horaFin" name="horaFin" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Prioridad:</label>
+                    <select id="prioridad" name="prioridad" required>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">GUARDAR</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">CANCELAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

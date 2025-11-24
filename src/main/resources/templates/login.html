@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiPlan - Inicio de Sesión</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>INICIO DE SESIÓN</h1>
+            
+            <div th:if="${error}" class="alert alert-error">
+                <span th:text="${error}"></span>
+            </div>
+            
+            <div th:if="${message}" class="alert alert-success">
+                <span th:text="${message}"></span>
+            </div>
+            
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label>CORREO:</label>
+                    <input type="email" name="correo" placeholder="Ingrese su correo" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>CONTRASEÑA:</label>
+                    <input type="password" name="contrasena" placeholder="************" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">INICIAR SESIÓN</button>
+                <a th:href="@{/registro}" class="btn btn-secondary">REGISTRARSE</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

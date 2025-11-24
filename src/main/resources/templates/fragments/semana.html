@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="semana" class="semana-container">
+        <div class="semana-header">
+            <h2>Vista Semanal</h2>
+            <p>Semana actual</p>
+        </div>
+
+        <div class="semana-grid">
+            <!-- Lunes -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).MONDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Lunes</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Martes -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).TUESDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Martes</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Miércoles -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).WEDNESDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Miércoles</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Jueves -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).THURSDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Jueves</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Viernes -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).FRIDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Viernes</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Sábado -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).SATURDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Sábado</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Domingo -->
+            <div th:with="dia=${semanaActual.with(T(java.time.DayOfWeek).SUNDAY)}"
+                 th:class="${dia.equals(T(java.time.LocalDate).now()) ? 'semana-dia hoy' : 'semana-dia'}">
+                <div class="dia-header">
+                    <h3>Domingo</h3>
+                    <span th:text="${#temporals.format(dia, 'dd/MM')}"></span>
+                </div>
+                <div class="tareas-del-dia">
+                    <th:block th:each="tarea : ${tareas}">
+                        <div th:if="${tarea.fecha.equals(dia)}"
+                             th:class="${'tarea-card priority-border-' + tarea.prioridad.toLowerCase()}">
+                            <div class="tarea-hora" th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></div>
+                            <div class="tarea-titulo" th:text="${tarea.titulo}"></div>
+                            <div class="tarea-categoria">
+                                <span th:text="${tarea.categoria.nombre}"></span>
+                            </div>
+                            <div class="tarea-descripcion" th:text="${tarea.descripcion}"></div>
+                            <div class="tarea-prioridad">
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </div>
+                            <div class="tarea-acciones">
+                                <button class="btn btn-sm btn-success"
+                                        th:onclick="'completarTarea(' + ${tarea.id} + ')'">✓ Completar</button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'eliminarTarea(' + ${tarea.id} + ')'">Eliminar</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

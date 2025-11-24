@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="recordatorios" class="recordatorios-container">
+        <div class="recordatorios-header">
+            <h2>Recordatorios de Tareas</h2>
+            <p>Gestiona los recordatorios para tus tareas pendientes</p>
+        </div>
+
+        <div class="recordatorios-content">
+            <th:block th:if="${#lists.isEmpty(tareas)}">
+                <div class="mensaje-vacio">
+                    <h3>No tienes tareas pendientes</h3>
+                    <p>Crea nuevas tareas para gestionar tus recordatorios</p>
+                </div>
+            </th:block>
+
+            <th:block th:if="${!#lists.isEmpty(tareas)}">
+                <table class="table recordatorios-table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Hora Tarea</th>
+                            <th>Prioridad</th>
+                            <th>Recordatorio</th>
+                            <th>Hora Recordatorio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tarea : ${tareas}">
+                            <td th:text="${tarea.titulo}"></td>
+                            <td th:text="${tarea.categoria.nombre}"></td>
+                            <td th:text="${#temporals.format(tarea.fecha, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${tarea.horaFin != null ? #temporals.format(tarea.horaFin, 'HH:mm') : 'Sin hora'}"></td>
+                            <td>
+                                <span th:class="${'badge priority-' + tarea.prioridad.toLowerCase()}"
+                                      th:text="${tarea.prioridad}"></span>
+                            </td>
+                            <td>
+                                <span th:if="${tarea.recordatorioActivo}" class="recordatorio-activo">
+                                    ✓ Activo
+                                </span>
+                                <span th:unless="${tarea.recordatorioActivo}" class="recordatorio-inactivo">
+                                    ✗ Inactivo
+                                </span>
+                            </td>
+                            <td th:text="${tarea.recordatorioActivo and tarea.horaRecordatorio != null ? #temporals.format(tarea.horaRecordatorio, 'HH:mm') : '-'}"></td>
+                            <td>
+                                <button th:if="${!tarea.recordatorioActivo}"
+                                        class="btn btn-sm btn-primary"
+                                        th:onclick="'activarRecordatorio(' + ${tarea.id} + ')'">
+                                    Activar
+                                </button>
+                                <button th:if="${tarea.recordatorioActivo}"
+                                        class="btn btn-sm btn-warning"
+                                        th:onclick="'desactivarRecordatorio(' + ${tarea.id} + ')'">
+                                    Desactivar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Resumen de recordatorios -->
+                <div class="recordatorios-resumen">
+                    <h3>Resumen</h3>
+                    <div class="resumen-items">
+                        <div class="resumen-item">
+                            <strong>Total de tareas pendientes:</strong>
+                            <span th:text="${#lists.size(tareas)}"></span>
+                        </div>
+                        <div class="resumen-item">
+                            <strong>Recordatorios activos:</strong>
+                            <span th:text="${#lists.size(tareas.?[recordatorioActivo == true])}"></span>
+                        </div>
+                        <div class="resumen-item">
+                            <strong>Sin recordatorio:</strong>
+                            <span th:text="${#lists.size(tareas.?[recordatorioActivo == false or recordatorioActivo == null])}"></span>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</body>
+</html>
